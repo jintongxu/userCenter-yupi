@@ -5,9 +5,6 @@ import com.baomidou.mybatisplus.core.toolkit.StringUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,7 +14,6 @@ import org.yupi.usercenter.common.ErrorCode;
 import org.yupi.usercenter.common.ResultUtils;
 import org.yupi.usercenter.constant.UserConstant;
 import org.yupi.usercenter.exception.BusinessException;
-import org.yupi.usercenter.mapper.UserMapper;
 import org.yupi.usercenter.model.domain.User;
 import org.yupi.usercenter.model.domain.request.UserLoginRequest;
 import org.yupi.usercenter.model.domain.request.UserRegisterRequest;
@@ -32,6 +28,11 @@ public class UserController {
     private UserService userService;
 
     @PostMapping("register")
+    /**
+     * 为什么这里要用@RequestBody？
+     *
+     * 因为后面的UserRegisterRequest是序列化后的对象，@RequestBody是将前端传进来的json参数转化为对象
+     */
     public BaseResponse<Long> userRegister(@RequestBody UserRegisterRequest userRegisterRequest) {
         String userAccount = userRegisterRequest.getUserAccount();
         String userPassword = userRegisterRequest.getUserPassword();

@@ -86,6 +86,8 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, User>
         user.setUserAccount(userAccount);
         user.setUserPassword(encryptPassword);
         user.setCreateTime(new Date());
+        // 注意这里为什么要用 this
+        // 
         boolean result = this.save(user);
         if (!result){
             throw new BusinessException("注册失败", 10029, "");
